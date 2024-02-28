@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shift Cipher Encryption and Decryption</title>
+</head>
+<body>
+    <h1>Shift Cipher Encryption and Decryption</h1>
+    <form action="#" method="post" id="cipherForm">
+        <label for="plaintext">Enter the plaintext:</label><br>
+        <input type="text" id="plaintext" name="plaintext" required><br><br>
+
+        <label for="key">Enter the key (a number from 1 to 25):</label><br>
+        <input type="number" id="key" name="key" min="1" max="25" required><br><br>
+
+        <input type="button" value="Encrypt" onclick="encryptText()">
+        <input type="button" value="Decrypt" onclick="decryptText()"><br><br>
+
+        <label for="encryptedText">Encrypted text:</label><br>
+        <textarea id="encryptedText" name="encryptedText" rows="4" cols="50" readonly></textarea><br><br>
+
+        <label for="decryptKey">Enter the key to decrypt:</label><br>
+        <input type="number" id="decryptKey" name="decryptKey" min="1" max="25" required><br><br>
+
+        <label for="decryptedText">Decrypted text:</label><br>
+        <textarea id="decryptedText" name="decryptedText" rows="4" cols="50" readonly></textarea><br><br>
+    </form>
+
+    <script>
+        function encryptText() {
+            var plaintext = document.getElementById("plaintext").value.toUpperCase();
+            var key = parseInt(document.getElementById("key").value);
+            var encryptedText = "";
+
+            for (var i = 0; i < plaintext.length; i++) {
+                var ch = plaintext.charAt(i);
+                if (ch.match(/[A-Z]/)) {
+                    var encryptedChar = String.fromCharCode(((ch.charCodeAt(0) - 65 + key) % 26) + 65);
+                    encryptedText += encryptedChar;
+                } else {
+                    encryptedText += ch;
+                }
+            }
+
+            document.getElementById("encryptedText").value = encryptedText;
+        }
+
+        function decryptText() {
+            var encryptedText = document.getElementById("encryptedText").value.toUpperCase();
+            var key = parseInt(document.getElementById("decryptKey").value);
+            var decryptedText = "";
+
+            for (var i = 0; i < encryptedText.length; i++) {
+                var ch = encryptedText.charAt(i);
+                if (ch.match(/[A-Z]/)) {
+                    var decryptedChar = String.fromCharCode(((ch.charCodeAt(0) - 65 - key + 26) % 26) + 65);
+                    decryptedText += decryptedChar;
+                } else {
+                    decryptedText += ch;
+                }
+            }
+
+            document.getElementById("decryptedText").value = decryptedText;
+        }
+    </script>
+</body>
+</html>
